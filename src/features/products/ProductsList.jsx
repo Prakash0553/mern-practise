@@ -1,25 +1,37 @@
 import { useNavigate } from 'react-router';
 import { baseUrl } from '../../app/mainApi';
 import { useGetProductsQuery } from './productApi'
-import { Rating } from '@material-tailwind/react';
+import { Button, Rating } from '@material-tailwind/react';
+import { useEffect, useState } from 'react';
 //import { baseUrl } from '../../app/mainApi';
 
 
 export default function ProductList() {
   const nav = useNavigate();
-  const { isLoading, error, data } = useGetProductsQuery();
+  const [page, setPage] = useState(1);
+  const [allProducts, setAllProducts] = useState([]);
+
+  const { isLoading, error, data } = useGetProductsQuery({page});
+  
+  useEffect(() => {
+    if (data) {
+      setAllProducts((prev) => [...prev, ...data]);
+    }
+  }, [data]);
+
   if (isLoading) return <h1>Loading...</h1>
   if (error) return <h1>{error.data?.message || error?.error}</h1>
 
   return (
-    <div className='grid grid-cols-6 my-6 gap-4'>
+    <div className='my-16'>
+    <div className='grid grid-cols-5 my-6 gap-4'>
 
-      {data && data.map(({ _id, title, price, image, rating }) => {
+      {allProducts.map(({ _id, title, price, image, rating }) => { // productController ko getProducts bata select garda auxa
         return <div
         onClick={() => nav(`/products/${_id}`)}
         key={_id} className='shadow-lg hover:shadow-2xl cursor-pointer'>
 
-          <div className='h-[250px] w-full'>
+          <div className='h-[250px] w-full px-4'>
             <img className='h-full object-cover' src={`${baseUrl}${image}`} alt="" />
           </div>
 
@@ -29,10 +41,14 @@ export default function ProductList() {
             <Rating readonly value={Math.round(rating)} />
           </div>
 
-
         </div>
       })}
 
+    </div>
+
+    <div className='flex justify-center'>
+      <Button  loading={isLoading} onClick={() => setPage((prev) => prev + 1)}>Explore More</Button>
+      </div>
     </div>
   )
 }

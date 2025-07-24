@@ -13,9 +13,9 @@ export default function Top5Products() {
     <div>
 
       <Carousel
-        autoplay
+        autopla
         className=" h-[370px]">
-        {data && data.map(({ _id, image }) => {
+        {data?.products && data.products.map(({ _id, image }) => {
           return <img
             key={_id}
             src={`${baseUrl}${image}`}

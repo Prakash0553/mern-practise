@@ -12,6 +12,7 @@ export const productApi = mainApi.injectEndpoints({
             method: 'GET',
             params: query
         }),
+        transformResponse: (response) => response.products,
         providesTags: ['Product']
         }),
 
@@ -23,6 +24,7 @@ export const productApi = mainApi.injectEndpoints({
         providesTags: ['Product']
         }),
 
+
         getTop5Products: builder.query({
             query: (query) => ({
             url: '/products/top-5',
@@ -31,6 +33,7 @@ export const productApi = mainApi.injectEndpoints({
         providesTags:['Product']
         }),
 
+        
         addProduct: builder.mutation({
             query: (query) => ({
             url: '/products',

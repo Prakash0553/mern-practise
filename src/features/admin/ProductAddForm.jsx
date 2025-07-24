@@ -11,7 +11,7 @@ export const productSchema = Yup.object().shape({
   description: Yup.string().required('description is required'),
   price: Yup.number().required('price is required'),
   category: Yup.string().required('category is required'),
-  brand: Yup.string().required('brand is required'),
+  author: Yup.string().required('Author is required'),
   image: Yup.mixed().required('image is required').test('fileType', 'Unsupported File Format', (value) => {
     console.log(value);
     return ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'].includes(value.type);
@@ -21,6 +21,7 @@ export const productSchema = Yup.object().shape({
 export default function ProductAddForm() {
   const nav = useNavigate();
   const [addProduct, { isLoading }] = useAddProductMutation();
+  // token locally save gareko xa ani teshlai acces garna useseletor use garni
   const { user } = useSelector((state) => state.userSlice);
 
   return (
@@ -33,7 +34,7 @@ export default function ProductAddForm() {
           price: '',
           image: '',
           category: '',
-          brand: '',
+          author: '',
           imagePrev: ''
 
         }}
@@ -44,10 +45,10 @@ export default function ProductAddForm() {
           formData.append('price', Number(val.price));
           formData.append('image', val.image);
           formData.append('category', val.category);
-          formData.append('brand', val.brand);
+          formData.append('author', val.author);
           try {
             await addProduct({
-              body:formData,
+              body:formData,  // body ma formdata ko sabai data pathako
               token: user?.token
             }).unwrap();
             toast.success('successfully added');
@@ -83,25 +84,28 @@ export default function ProductAddForm() {
               <Select
                 onChange={(e) => setFieldValue('category', e)}
                 label="Select Category">
-                <Option value="men's clothing">Men's Clothing</Option>
-                <Option value="women's clothing">Women's Clothing</Option>
-                <Option value="jewelery">Jewelery</Option>
-                <Option value="electronics">Electronics</Option>
-
+                <Option value="Romance">Romance</Option>
+                <Option value="Comedy">Comedy</Option>
+                <Option value="Horror">Horror</Option>
+                <Option value="Science Fiction">Science Fiction</Option>
+                <Option value="Adventure">Adventure</Option>
+                <Option value="Fantacy">Fantacy</Option>
+                <Option value="Mystery">Mystery</Option>                
               </Select>
               {touched.category && errors.category && <p className='text-red-500'>{errors.category}</p>}
             </div>
+
             <div >
               <Select
-                onChange={(e) => setFieldValue('brand', e)}
-                label="Select Brand">
-                <Option value='Apple'>Apple</Option>
-                <Option value='Samsung'>Samsung</Option>
-                <Option value='Addidas'> Addidas</Option>
-                <Option value='Google'>Google</Option>
-                <Option value='Tanishq'>Tanishq</Option>
+                onChange={(e) => setFieldValue('author', e)}
+                label="Select Author">
+                <Option value='Emily Bronte'>Emily Bronte</Option>
+                <Option value='Nikita Gill'>Nikita Gill</Option>
+                <Option value='Paul Jarvis'>Paul Jarvis</Option>
+                <Option value='Lauren Asher'>Lauren Asher</Option>
+                <Option value='Will Gompertz'>Will Gompertz</Option>                
               </Select>
-              {touched.brand && errors.brand && <p className='text-red-500'>{errors.brand}</p>}
+              {touched.author && errors.author && <p className='text-red-500'>{errors.author}</p>}
             </div>
 
             <Textarea

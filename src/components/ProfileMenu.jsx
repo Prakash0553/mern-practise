@@ -9,7 +9,7 @@ import {
 import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 import { useDispatch } from 'react-redux';
 import { removeUser } from '../features/user/userSlice';
-import { useNavigate } from 'react-router';
+import { Navigate, NavLink, useNavigate } from 'react-router';
 
 // admin profile menu component
 const adminMenuItems = [
@@ -50,6 +50,7 @@ export default function ProfileMenu({ user }) {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
+  {/* user ko role check garera admin menu ra usermenu dekhauni */}
   const profileMenuItems = user?.role === 'Admin' ? adminMenuItems : userMenuItems;
 
   return (
@@ -85,6 +86,7 @@ export default function ProfileMenu({ user }) {
                 switch (label) {
                   case 'Sign Out':
                     dispatch(removeUser());
+                  
                     break;
                   case 'Admin Dashboard':
                     nav('/admin/dashboard');

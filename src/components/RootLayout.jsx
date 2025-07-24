@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet, useLocation } from 'react-router'
 import Header from './Header'
+import Footer from './Footer'
+
 
 export default function RootLayout() {
   return (
@@ -10,6 +12,9 @@ export default function RootLayout() {
       <main className='px-12'>
         <Outlet />
       </main>
+      <Footer/>
+
+      
 
 
     </div>

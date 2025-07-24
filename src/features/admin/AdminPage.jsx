@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetProductsQuery, useRemoveProductMutation } from '../products/productApi';
+import { useGetProductsQuery } from '../products/productApi';
 import { Avatar, Button, Card, IconButton, Typography } from "@material-tailwind/react";
 import { baseUrl } from '../../app/mainApi';
 import { NavLink } from 'react-router';
