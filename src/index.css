@@ -1,7 +1,11 @@
 @config "../tailwind.config.js";
 @import "tailwindcss";
 
-
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 /* hide scrollbar but allow scroll */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

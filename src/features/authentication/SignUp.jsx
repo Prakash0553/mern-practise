@@ -1,6 +1,6 @@
 import { Button, IconButton, Input, Typography } from '@material-tailwind/react'
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import { useUserSignUpMutation } from './authenticationApi';

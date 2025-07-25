@@ -5,6 +5,7 @@ import Footer from '../../components/Footer'
 import Swipper from '../products/Swipper'
 import TopPicks from '../../components/TopPicks'
 
+
 export default function HomePage() {
   return (
     <div>
@@ -12,8 +13,10 @@ export default function HomePage() {
        {/*  <Top5Products/>     */} 
         {/*  <ProductsList/>    */} 
         {/*   <Swipper/>   */}
-        <Swipper/>
+        <Top5Products/>
+        <ProductsList/>
        <TopPicks/>
+       <Swipper/>
         
         
 

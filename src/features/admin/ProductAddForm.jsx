@@ -25,7 +25,8 @@ export default function ProductAddForm() {
   const { user } = useSelector((state) => state.userSlice);
 
   return (
-    <div className='max-w-[400px] mt-10 pb-5'>
+    <div className='min-h-screen w-full flex justify-center items-center  bg-blue-gray-50 '>
+    <div className='w-full max-w-md bg-white shadow-lg p-6 rounded-xl m-20'>
 
       <Formik
         initialValues={{
@@ -134,11 +135,11 @@ export default function ProductAddForm() {
               {!errors.image && values.imagePrev && <img className='w-[200px] h-[200px] object-cover' src={values.imagePrev} alt="" />}
             </div>
 
-
-
-
-            <Button loading={isLoading} type='submit'>Submit</Button>
-
+            <div className="flex justify-center">
+              <Button loading={isLoading} type="submit">
+                 Submit
+              </Button>
+            </div>
 
           </form>
         )}
@@ -146,6 +147,7 @@ export default function ProductAddForm() {
 
 
 
+    </div>
     </div>
   )
 }

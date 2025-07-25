@@ -16,9 +16,9 @@ export default function Header() {
   const { user } = useSelector((state) => state.userSlice);
 
   return (
-    <Navbar className=" bg-gray-100 max-w-[100%] ">
+    <Navbar className=" bg-gray-100 max-w-[100%] px-4 py-2 shadow-md">
 
-      <div className=" mx-auto flex items-center justify-between text-blue-gray-900 ">
+      <div className=" mx-auto flex items-center justify-between text-blue-gray-900 md:flex-row md:items-center md:justify-between gap-4 ">
         <div>
         <NavLink to={'/'}>
         <Typography
@@ -30,7 +30,7 @@ export default function Header() {
         </NavLink>
         </div>
 
-        <div className="flex items-center gap-2 w-full max-w-md mx-auto">
+        <div className="flex flex-col sm:flex-row items-stretch gap-2 w-full md:max-w-md mx-auto">
         <Input
         type="text"
         label="Search..."

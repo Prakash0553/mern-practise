@@ -7,11 +7,13 @@ export default function ProfileMainPage() {
 
   const { user } = useSelector((state) => state.userSlice);
   return (
-    <div className='p-5 grid grid-cols-3 gap-5'>
+    <div className='flex sm:justify-center md:justify-center lg:justify-items-end my-16'>
+    <div className='grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-28 '>
 
       <UserProfile user={user} />
       <OrderPage user={user} />
 
+    </div>
     </div>
   )
 }

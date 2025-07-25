@@ -23,10 +23,10 @@ export default function Product() {
 
 
   return (
-    <div>
-      <div className="grid grid-cols-3 my-5 gap-5">
-        <div>
-          <img src={`${baseUrl}${data.image}`} alt="" />
+    <div className="p-4 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start py-5">
+        <div className="w-full">
+          <img src={`${baseUrl}${data.image}`} alt="" className="w-full h-auto object-cover rounded-xl" />
         </div>
         <div className="space-y-3">
           <h2 className="font-medium">{data.title}</h2>
@@ -60,9 +60,9 @@ function ProductAddToCart({ product }) { {/* as a props data leko */}
     nav('/carts');
   }
   return (
-    <Card className="flex items-center space-y-7 justify-center">
-      <h1>Product Add</h1>
-      <div className="flex gap-3">
+    <Card className="flex flex-col items-center gap-4 p-6 shadow-md rounded-xl w-full ">
+      <h1 className="text-lg font-medium">Product Add</h1>
+      <div className="flex items-center gap-3">
 
         <IconButton
           onClick={() => setCount(count - 1)}

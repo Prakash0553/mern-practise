@@ -78,7 +78,7 @@ export default function OrderPage({ user }) {
 
                   <td className={classes}>
                     <Link to={`/orders/${_id}`}>
-                      <Button size="sm" variant="text">View Detail</Button>
+                      <Button size="sm" variant="text">View Details</Button>
                     </Link>
                   </td>
 

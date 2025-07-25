@@ -31,6 +31,8 @@ export default function App () {
       { path: 'login', element: user ? <Navigate too="/" /> : <Login /> },// login nai xa ani feri login garna khojyo vani homepage ma pathaidinxa
       { path: 'sign-up', element: user ? <Navigate to="/" /> : <SignUp /> },
 
+     
+
       // Admin Routes
        {
           element: <AdminRoute/>,
