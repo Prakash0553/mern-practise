@@ -28,7 +28,7 @@ export default function App () {
     children: [
       { index: true, element: <HomePage /> },
    
-      { path: 'login', element: user ? <Navigate too="/" /> : <Login /> },// login nai xa ani feri login garna khojyo vani homepage ma pathaidinxa
+      { path: 'login', element: user ? <Navigate to="/" /> : <Login /> },// login nai xa ani feri login garna khojyo vani homepage ma pathaidinxa
       { path: 'sign-up', element: user ? <Navigate to="/" /> : <SignUp /> },
 
      

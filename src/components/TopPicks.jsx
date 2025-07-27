@@ -1,13 +1,13 @@
 import { Button } from '@material-tailwind/react'
 import oneImage from '../assests/ourPicks.webp'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 
 
 export default function TopPicks() {
   return (
 
-    <div className='flex  h-88  flex-col md:flex-row justify-between items-center gap-6 
+    <div className='flex  h-[22rem]  flex-col md:flex-row justify-between items-center gap-6 
                     px-6 md:px-10 py-10 my-16
                     bg-gradient-to-b from-[#fff7e6] via-[#fff3d6] to-[#fffdfa] w-full'>
 

@@ -1,9 +1,8 @@
-import React from 'react'
-import { useGetProductsQuery } from '../products/productApi';
 import { Avatar, Button, Card, IconButton, Typography } from "@material-tailwind/react";
 import { baseUrl } from '../../app/mainApi';
 import { NavLink } from 'react-router';
 import RemoveButtn from './RemoveButtn';
+import { useGetProductsQuery } from "../products/productApi";
 
 
 
@@ -51,8 +50,8 @@ export default function AdminPage() {
           </thead>
 
           <tbody>
-            {data.map(({ _id, image, title }, index) => {
-              const isLast = index === data.length - 1;
+            {data?.products && data.products.map(({ _id, image, title }, index) => {
+              const isLast = index === data.products.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
               return (

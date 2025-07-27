@@ -1,83 +1,85 @@
-import { useNavigate } from 'react-router';
-import { baseUrl } from '../../app/mainApi';
-import { useGetProductsQuery } from './productApi';
+import { useGetProductsQuery } from './productApi'
 import { Button, Rating } from '@material-tailwind/react';
-import { useEffect, useState, useRef } from 'react';
+import { baseUrl } from '../../app/mainApi';
+import { useNavigate } from 'react-router';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function ProductList() {
   const nav = useNavigate();
   const [page, setPage] = useState(1);
+  const limit = 10;
+
+  const { data, isLoading, error, isFetching } = useGetProductsQuery({ page, limit });
+  const totalPages = data?.pages || 1;
+
+  const allProductsRef = useRef([]);
   const [allProducts, setAllProducts] = useState([]);
-  const loadMoreRef = useRef(null);
 
-  const { isLoading, error, data } = useGetProductsQuery({ page });
-
-  // Append new products to the list
+  // Merge and deduplicate products
   useEffect(() => {
-    if (data) {
-      setAllProducts((prev) => [...prev, ...data]);
+    if (data?.products?.length) {
+      const newProducts = data.products.filter(
+        (newProd) => !allProductsRef.current.some((prod) => prod._id === newProd._id)
+      );
+      allProductsRef.current = [...allProductsRef.current, ...newProducts];
+      setAllProducts([...allProductsRef.current]);
     }
   }, [data]);
 
-  // Infinite Scroll logic
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          setPage((prev) => prev + 1);
-        }
-      },
-      { threshold: 1 }
-    );
+  const handleShowMore = () => {
+    if (page < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
-    const current = loadMoreRef.current;
-    if (current) observer.observe(current);
-
-    return () => {
-      if (current) observer.unobserve(current);
-    };
-  }, [isLoading]);
-
-  if (error) return <h1>{error.data?.message || error?.error}</h1>;
+  if (error) return <h1>{error.data?.message || error.error}</h1>;
 
   return (
-    <div className='my-16 px-4'>
-      <h1 className='font-bold text-2xl'>All Avaible Books</h1>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 my-6'>
+    <div className="max-w-7xl mx-auto px-4 mt-16">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-blue-gray-800 mb-10 relative mt-4">
+        <span className="relative z-10">Available Books</span>
+        <span className="absolute left-1/2 -bottom-1 w-32 h-1 bg-red-400 rounded-full -translate-x-1/2"></span>
+      </h1>
 
-        {allProducts.map(({ _id, title, price, image, rating }) => (
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
+        {allProducts.map(({ _id, title, price, image, rating, quantity }) => (
           <div
             onClick={() => nav(`/products/${_id}`)}
             key={_id}
-            className='shadow-lg hover:shadow-2xl cursor-pointer rounded-md overflow-hidden'
+            className='bg-white shadow-md hover:shadow-xl cursor-pointer rounded-lg overflow-hidden transition duration-300'
           >
-            <div className='h-[250px] w-full '>
+            <div className='aspect-[4/5] w-full overflow-hidden bg-gray-100'>
               <img
-                className='h-full w-full object-cover'
                 src={`${baseUrl}${image}`}
                 alt={title}
-                loading="lazy"
+                className='h-full w-full object-cover object-center transition duration-300 hover:scale-105'
               />
             </div>
 
             <div className='px-4 py-2 space-y-1'>
-              <h2 className='font-medium truncate'>{title}</h2>
-              <p className='text-red-400'>Rs.{price}</p>
+              <h2 className='font-semibold text-gray-800 text-base truncate'>{title}</h2>
+              <p className={`text-sm ${quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {quantity > 0 ? `In Stock: ${quantity}` : 'Out of Stock'}
+              </p>
+              <p className='text-red-500 font-medium'>Rs.{price}</p>
               <Rating readonly value={Math.round(rating)} />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Infinite scroll target */}
-      <div ref={loadMoreRef} className="h-6"></div>
-
-      {/* Manual "Explore More" button */}
-      <div className='flex justify-center mt-6'>
-        <Button onClick={() => setPage((prev) => prev + 1)} loading={isLoading}>
-          Explore More
-        </Button>
-      </div>
+      {/* Show More Button */}
+      {page < totalPages && (
+        <div className='text-center mt-8'>
+          <Button
+            onClick={handleShowMore}
+            loading={isFetching}
+            color='blue'
+          >
+            Show More
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
