@@ -10,6 +10,7 @@ export const productSchema = Yup.object().shape({
   title: Yup.string().required('title is required'),
   description: Yup.string().required('description is required'),
   price: Yup.number().required('price is required'),
+  quantity: Yup.number().required('Quantity is required'),
   category: Yup.string().required('category is required'),
   author: Yup.string().required('Author is required'),
   image: Yup.mixed().required('image is required').test('fileType', 'Unsupported File Format', (value) => {
@@ -34,6 +35,7 @@ export default function ProductAddForm() {
           description: '',
           price: '',
           image: '',
+          quantity: '',
           category: '',
           author: '',
           imagePrev: ''
@@ -44,6 +46,7 @@ export default function ProductAddForm() {
           formData.append('title', val.title);
           formData.append('description', val.description);
           formData.append('price', Number(val.price));
+          formData.append('quantity',Number(val.quantity))
           formData.append('image', val.image);
           formData.append('category', val.category);
           formData.append('author', val.author);
@@ -80,6 +83,14 @@ export default function ProductAddForm() {
               {touched.price && errors.price && <p className='text-red-500'>{errors.price}</p>}
             </div>
 
+            <div>
+              <Input 
+              onChange={handleChange}
+              value={values.quantity}
+              label='quantity'
+              name='quantity'/>
+              {touched.quantity && errors.quantity && <p className='text-red-500'>{errors.quantity}</p>}
+            </div>
 
             <div>
               <Select
